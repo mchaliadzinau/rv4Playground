@@ -1,0 +1,34 @@
+{
+  "name": "rv4knowledge",
+  "version": "0.0.1",
+  "description": "knowledge management tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js && nw src",
+    "debug": "nw src --remote-debugging-port=7777",
+    "nwsdk": "nw install 0.26.1-sdk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rv4Flyver/rv4Knowledge.git"
+  },
+  "keywords": [
+    "nw.js",
+    "jqlite",
+    "management"
+  ],
+  "author": "rv4Flyver",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rv4Flyver/rv4Knowledge/issues"
+  },
+  "homepage": "https://github.com/rv4Flyver/rv4Knowledge#readme",
+  "dependencies": {
+    "jqlite": "^0.2.42"
+  },
+  "devDependencies": {
+    "npm-run": "latest",
+    "nwjs": "latest"
+  }
+}
