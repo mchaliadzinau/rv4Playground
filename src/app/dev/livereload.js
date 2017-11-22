@@ -1,6 +1,6 @@
 let fs = require('fs');
 let reloadFn = function() {
-    location.reload();
+    window.location.reload();
     this.close();
 }
 

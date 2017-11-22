@@ -6,11 +6,11 @@
     </head>
     <body>
         <h1></h1>
-        <form>
-            <input type="text">
-        </form>
         
         <div rv4="app1">
+            <form>
+                <input type="text" rv4In="searchString" rv4Out="searchString">
+            </form>
             <table>
                 <thead>
                     <tr>
@@ -27,6 +27,6 @@
     </body>
     <script src="/app/dev/livereload.js"></script>
       <script>
-            rv4.init(window,jqlite);
+            rv4.init(document.defaultView,jqlite);
       </script>
   </html>

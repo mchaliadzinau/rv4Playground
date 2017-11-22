@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js && nw src",
+    "start": "node index.js && nw src --enable-logging=stderr",
     "debug": "nw src --remote-debugging-port=7777",
-    "nwsdk": "nw install 0.26.1-sdk"
+    "nwsdk": "nw install 0.26.6-sdk"
   },
   "repository": {
     "type": "git",
