@@ -1,17 +1,32 @@
 <html>
     <head>
-      <title>Hello World!</title>
-      <script src="/app/root.js"></script>
-<script src='libs/jqlite.js'></script>
+        <title>Hello World!</title>
+        <script src="/app/root.js"></script>
+        <script src='libs/jqlite.js'></script>
     </head>
     <body>
-        <h1> 
-        </h1>
-        <div id="rv">text</div>
+        <h1></h1>
+        <form>
+            <input type="text">
+        </form>
+        
+        <div rv4="app1">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Problem</td><td>Solution</td><td>Problem TAGs</td><td>Solution TAGs</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr rv4For="problems">
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
     <script src="/app/dev/livereload.js"></script>
       <script>
-            rv4.w = window;
-            rv4.q = jqlite;
+            rv4.init(window,jqlite);
       </script>
   </html>
