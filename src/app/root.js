@@ -46,8 +46,12 @@ function initAppTree() {
 
             data.forEach(i=>{
                 let newNode = node.clone();
-                newNode.html(i);
-                node.parent().append(newNode)
+                node.parent().append(newNode);
+                let rv4ForIns = rv4.q('*[rv4ForIn]',newNode[0]);
+                rv4ForIns.forEach(forIn=>{
+                    let forInVarName = forIn.attributes['rv4ForIn'].value;
+                    forIn.innerText = i[forInVarName];
+                })
             })
         })
 

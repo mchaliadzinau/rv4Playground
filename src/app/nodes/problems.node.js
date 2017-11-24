@@ -3,19 +3,36 @@ rv4.addNode({
     template: ``,
     nodeRef: null,
     vars: {
-        _searchString : 'asds',
         nodeRef: null,
-        get searchString() {
-            return this._searchString;
-        },
-        set searchString(value) {
-            this._searchString = value;
-            this.nodeRef.trigger('searchStringChange');
-        },
-        problems: [
-            "<td>1</td><td>2</td><td>3</td><td>4</td>",
-            "<td>5</td><td>6</td><td>7</td><td>8</td>"
-        ]
+        _searchString : 'asds',
+            get searchString() {
+                return this._searchString;
+            },
+            set searchString(value) {
+                this._searchString = value;
+                this.nodeRef.trigger('searchStringChange');
+            },
+        _problemsList : [
+            {
+                problem: '1',
+                solution: '2',
+                problemTags: '3',
+                solutionTags: '4'
+            },
+            {
+                problem: '5',
+                solution: '6',
+                problemTags: '7',
+                solutionTags: '8'
+            },
+        ],
+            get problemsList() {
+                return this._problemsList;
+            },
+            set problemsList(value) {
+                this._problemsList = value;
+                this.nodeRef.trigger('problemsListChange');
+            },
     },
     logic: function(){
         

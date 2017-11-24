@@ -18,13 +18,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr rv4For="problems" load="console.log('rv4For=problems')">
-                        
+                    <tr rv4For="problemsList">
+                            <td rv4ForIn="problem"></td>
+                            <td rv4ForIn="solution"></td>
+                            <td rv4ForIn="problemTags"></td>
+                            <td rv4ForIn="solutionTags"></td>
                     </tr>
                 </tbody>
                 <button onclick="rv4.tree['problems'].vars['searchString']='BUTTON CLICKED!'">CLICK!</button>
             </table>
-            <input type="text" rv4In="searchString">
+            <textarea type="text" rv4In="searchString"></textarea>
         </div>
     </body>
     <script src="/app/dev/livereload.js"></script>
