@@ -1,13 +1,13 @@
 <html>
     <head>
         <title>Hello World!</title>
-        <script src="/app/root.js"></script>
+        <script src="app/root.js"></script>
         <script src='libs/jqlite.js'></script>
     </head>
     <body>
         <h1></h1>
         
-        <div rv4="app1">
+        <div rv4="problems" load="console.log('rv4=app1')">
             <form>
                 <input type="text" rv4In="searchString" rv4Out="searchString">
             </form>
@@ -18,15 +18,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr rv4For="problems">
+                    <tr rv4For="problems" load="console.log('rv4For=problems')">
                         
                     </tr>
                 </tbody>
+                <button onclick="rv4.tree['problems'].vars['searchString']='BUTTON CLICKED!'">CLICK!</button>
             </table>
+            <input type="text" rv4In="searchString">
         </div>
     </body>
     <script src="/app/dev/livereload.js"></script>
-      <script>
-            rv4.init(document.defaultView,jqlite);
-      </script>
+    <script src="/app/nodes/problems.node.js"></script>
+    <script>
+        rv4.init(document.defaultView,jqlite);
+    </script>
   </html>

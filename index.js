@@ -28,3 +28,8 @@ Object.keys(package.dependencies).forEach(function(element) {
     fs.createReadStream('node_modules/'+element+'/'+element+'.js').pipe(fs.createWriteStream('src/libs/'+element+'.js'));
     appendScript2Index('libs/'+element+'.js') // programmatically add <script> tags (rough implementation)
 }, this);
+
+
+
+
+var nodes = require('./src/app/nodes/nodes.json');

@@ -18,16 +18,12 @@ rv4 = {
         windw.window;
     },
     data: {
-        'app1': {
-            searchString: "aaa",
-            problems: [
-                "<td>1</td><td>2</td><td>3</td><td>4</td>",
-                "<td>5</td><td>6</td><td>7</td><td>8</td>"
-            ]
-        }
     },
     tree: {
-
+    },
+    nodes: {},
+    addNode(node) {
+        this.nodes[node.name] = node;
     }
 }
 
@@ -36,17 +32,17 @@ function initAppTree() {
     // LOOP THROUGH ROOT NODES
     rv4s.forEach(root=>{
         let node = rv4.q(root);
+        observeDOM( node[0] ,function(mutations){ console.log('dom ',mutations)});
         let rootName = node.attr('rv4'); // ROOT NODE NAME
-        rv4.tree[rootName] = {
-            e: rv4.q(root) // element ref
-        }
-
+        rv4.tree[rootName] = rv4.nodes[rootName];
+        rv4.tree[rootName].nodeRef = node;
+        rv4.tree[rootName].vars.nodeRef = node;
         // LOOP THROUGH FOR NODES
         let rv4Fors = rv4.q('*[rv4For]',root);
         rv4Fors.forEach(f=>{
             let node = rv4.q(f);
             let dataName = node.attr('rv4For');
-            let data = rv4.data[rootName][dataName];
+            let data = rv4.tree[rootName].vars[dataName];
 
             data.forEach(i=>{
                 let newNode = node.clone();
@@ -60,8 +56,12 @@ function initAppTree() {
         rv4Ins.forEach(i=>{
             let node = rv4.q(i);
             let dataName = node.attr('rv4In');
-            let data = rv4.data[rootName][dataName];
+            let data = rv4.tree[rootName].vars[dataName];
             node.val(data);
+            rv4.q(root).on(dataName+'Change',(event)=>{
+                    let data = rv4.tree[rootName].vars[dataName];
+                    node.val(data);
+            })
         })
 
         // LOOP THROUGH OUTPUTS
@@ -69,10 +69,9 @@ function initAppTree() {
         rv4Outs.forEach(i=>{
             let node = rv4.q(i);
             let dataName = node.attr('rv4Out');
-            node.on('change',()=>{
-                rv4.data[rootName][dataName] = node.val();
-                console.log(node, node.val())
-            })
+            node.on('change',function(event){
+                rv4.tree[rootName].vars[dataName] = event.target.value;
+            });
         })
 
     });
@@ -87,3 +86,26 @@ function initAppTree() {
 }
 
 console.log("root EXECUTION is COMPLETED");
+
+var observeDOM = (function(){
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
+        eventListenerSupported = window.addEventListener;
+
+    return function(obj, callback){
+        if( MutationObserver ){
+            // define a new observer
+            var obs = new MutationObserver(function(mutations, observer){
+                if( mutations[0].addedNodes.length || mutations[0].removedNodes.length )
+                    callback(mutations);
+            });
+            // have the observer observe foo for changes in children
+            obs.observe( obj, { childList:true, subtree:true });
+        }
+        else if( eventListenerSupported ){
+            obj.addEventListener('DOMNodeInserted', callback, false);
+            obj.addEventListener('DOMNodeRemoved', callback, false);
+        }
+    };
+})();
+
+// Observe a specific DOM element:

@@ -1,4 +1,6 @@
 {
     "name": "rv4knowledge",
-    "main": "index.html"
+    "main": "index.html",
+    "chromium-args": "--js-flags=--harmony",
+    "js-flags": "--harmony --harmony_templates --harmony-proxies --harmony_classes"
   }
