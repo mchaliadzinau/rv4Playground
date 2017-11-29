@@ -11,6 +11,7 @@
         <div rv4="problems" class="problems">
             <form>
                 <input type="text" rv4In="searchString" rv4Out="searchString">
+                <button type="button" onclick="rv4.tree['problems'].vars['searchString']='BUTTON CLICKED!'">CLICK!</button>
             </form>
             <table>
                 <thead>
@@ -26,9 +27,9 @@
                             <td rv4ForIn="solutionTags"></td>
                     </tr>
                 </tbody>
-                <button onclick="rv4.tree['problems'].vars['searchString']='BUTTON CLICKED!'">CLICK!</button>
             </table>
-            <textarea type="text" rv4In="searchString"></textarea>
+            <textarea type="text" rv4In="addJSON" rv4Out="addJSON"></textarea>
+            <button onclick="rv4.nodes['problems'].vars.problemsList.push(JSON.parse(rv4.nodes['problems'].vars.addJSON))">addJSON</button>
         </div>
     </body>
     <script src="/app/dev/livereload.js"></script>

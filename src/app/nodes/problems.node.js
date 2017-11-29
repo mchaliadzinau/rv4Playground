@@ -64,6 +64,19 @@ rv4.addNode({
                 this._problemsList = new Proxy(value, proxyConfFactory(this.nodeRef,"problemsList"))
                 this.nodeRef.trigger('problemsListChange');
             },
+        _addJSON: '{\n\t"problem": "1",\n\t"solution": "2",\n\t"problemTags": "3",\n\t"solutionTags": "4"\n}',
+        get addJSON() {
+            return this._addJSON;
+        },
+        set addJSON(value) {
+            try {
+                JSON.parse(value);
+                this._addJSON = value;
+                this.nodeRef.trigger('problemsListChange');
+            } catch(e) {
+                alert(e)
+            }
+        },
     },
     logic: function(){
         
