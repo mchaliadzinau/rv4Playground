@@ -1,6 +1,23 @@
 var package = require('./package.json');
 var fs = require('fs');
+var less = require('less');
 
+// TASK for building CSS from LESS
+fs.readFile('./src/index.less',function(error,data){
+    if(error) {
+        console.log(error);
+        return;
+    }
+    data = data.toString();
+    less.render(data, function (e, css) {
+        fs.writeFile('./src/index.css', css.css, function(err){
+            console.log('done index.less to index.css');
+        });
+    });
+});
+
+// TASK for adding client-side libraries
+// TO DO distinguish server-side from client-side libraries
 function appendScript2Index(libFullPath) {
     console.log("appendScript2Index",libFullPath)
     var data = fs.readFileSync('src/index.html').toString().split("\n");
@@ -23,7 +40,6 @@ function appendScript2Index(libFullPath) {
         if (err) return console.log(err);
     });
 }
-
 Object.keys(package.dependencies).forEach(function(element) {
     fs.createReadStream('node_modules/'+element+'/'+element+'.js').pipe(fs.createWriteStream('src/libs/'+element+'.js'));
     appendScript2Index('libs/'+element+'.js') // programmatically add <script> tags (rough implementation)
@@ -32,4 +48,4 @@ Object.keys(package.dependencies).forEach(function(element) {
 
 
 
-var nodes = require('./src/app/nodes/nodes.json');
+// var nodes = require('./src/app/nodes/nodes.json');

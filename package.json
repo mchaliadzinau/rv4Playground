@@ -26,8 +26,9 @@
   "homepage": "https://github.com/rv4Flyver/rv4Knowledge#readme",
   "dependencies": {
     "jqlite": "^0.2.42"
-  },
-  "devDependencies": {
+},
+"devDependencies": {
+    "less": "^2.7.3",
     "npm-run": "latest",
     "nwjs": "latest"
   }
