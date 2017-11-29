@@ -42,15 +42,29 @@ function initAppTree() {
         rv4Fors.forEach(f=>{
             let node = rv4.q(f);
             let dataName = node.attr('rv4For');
-            let data = rv4.tree[rootName].vars[dataName];
+            let parent = node.parent();
 
-            data.forEach(i=>{
+            rv4.tree[rootName].vars[dataName].forEach(i=>{
                 let newNode = node.clone();
-                node.parent().append(newNode);
+                parent.append(newNode);
                 let rv4ForIns = rv4.q('*[rv4ForIn]',newNode[0]);
                 rv4ForIns.forEach(forIn=>{
                     let forInVarName = forIn.attributes['rv4ForIn'].value;
                     forIn.innerText = i[forInVarName];
+                })
+            })
+
+            rv4.q(root).on(dataName+'Change',function(event){
+                console.log(dataName+'Change');
+                parent.html('');
+                rv4.tree[rootName].vars[dataName].forEach(i=>{
+                    let newNode = node.clone();
+                    parent.append(newNode);
+                    let rv4ForIns = rv4.q('*[rv4ForIn]',newNode[0]);
+                    rv4ForIns.forEach(forIn=>{
+                        let forInVarName = forIn.attributes['rv4ForIn'].value;
+                        forIn.innerText = i[forInVarName];
+                    })
                 })
             })
         })
