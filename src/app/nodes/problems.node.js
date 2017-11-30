@@ -64,21 +64,30 @@ rv4.addNode({
                 this._problemsList = new Proxy(value, proxyConfFactory(this.nodeRef,"problemsList"))
                 this.nodeRef.trigger('problemsListChange');
             },
-        _addJSON: '{\n\t"problem": "1",\n\t"solution": "2",\n\t"problemTags": "3",\n\t"solutionTags": "4"\n}',
-        get addJSON() {
-            return this._addJSON;
+        _additionJSON: '{\n\t"problem": "1",\n\t"solution": "2",\n\t"problemTags": "3",\n\t"solutionTags": "4"\n}',
+        get additionJSON() {
+            return this._additionJSON;
         },
-        set addJSON(value) {
+        set additionJSON(value) {
+            // validation logic example
             try {
                 JSON.parse(value);
-                this._addJSON = value;
+                this._additionJSON = value;
                 this.nodeRef.trigger('problemsListChange');
             } catch(e) {
-                alert(e)
+                alert(e);
+                this.nodeRef.trigger('additionJSONChange'); // preventing wrong JSON by restoration of previous value of control
             }
         },
+        /** NODE LOGIC */
+        addProblemWithJSON(jsonString) {
+            try {
+                this.problemsList.push(JSON.parse(jsonString))
+            } catch (e) {
+
+            }
+        }
     },
-    logic: function(){
-        
+    logic: {
     }
 })

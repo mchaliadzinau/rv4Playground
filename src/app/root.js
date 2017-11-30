@@ -92,6 +92,17 @@ function initAppTree() {
             });
         })
 
+
+        // LOOP THROUGH CLICK HANDLERS
+        let rv4OnClicks = rv4.q('*[onclick]',root);
+        rv4OnClicks.forEach(i=>{
+            let node = rv4.q(i);
+            let clickHandler = node[0].onclick;
+            node[0].onclick = (event)=>{
+                clickHandler.apply(rv4.tree[rootName].vars)
+            }
+        })
+
     });
 
     // on page reload events and handlers
