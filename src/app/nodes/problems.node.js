@@ -19,7 +19,36 @@ let proxyConfFactory = (nodeRef, name) => ({
 
 rv4.addNode({
     name: "problems",
-    template: ``,
+    template: `
+<form>
+    <input type="text" rv4In="searchString" rv4Out="searchString">
+    <button type="button" onclick="rv4.tree['problems'].vars['searchString']='BUTTON CLICKED!'">CLICK!</button>
+</form>
+<table>
+    <thead>
+        <tr>
+            <td>Problem</td><td>Solution</td><td>Problem TAGs</td><td>Solution TAGs</td><td>Action</td><td>#</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr rv4For="problemsList">
+                <td rv4ForIn="problem"></td>
+                <td rv4ForIn="solution"></td>
+                <td rv4ForIn="problemTags"></td>
+                <td rv4ForIn="solutionTags"></td>
+                <td>
+                    <button type="button" rv4ForClick="dropProblem($index)"></button>
+                </td>
+                <td>
+                    <ul rv4For="problemsList">
+                        <li rv4ForIn="problem"></li>
+                    </ul>
+                </td>
+        </tr>
+    </tbody>
+</table>
+<textarea type="text" rv4In="additionJSON" rv4Out="additionJSON"></textarea>
+<button onclick="this.addProblemWithJSON(this.additionJSON)">addJSON</button>`,
     nodeRef: null,
     vars: {
         /**
@@ -86,6 +115,9 @@ rv4.addNode({
             } catch (e) {
 
             }
+        },
+        dropProblem(idx) {
+            alert(idx);
         }
     },
     logic: {

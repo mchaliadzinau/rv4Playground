@@ -37,6 +37,7 @@ function initAppTree() {
         rv4.tree[rootName] = rv4.nodes[rootName];
         rv4.tree[rootName].nodeRef = node;
         rv4.tree[rootName].vars.nodeRef = node;
+        node.html(rv4.tree[rootName].template);
         // LOOP THROUGH FOR NODES
         let rv4Fors = rv4.q('*[rv4For]',root);
         rv4Fors.forEach(f=>{
@@ -44,27 +45,46 @@ function initAppTree() {
             let dataName = node.attr('rv4For');
             let parent = node.parent();
 
-            rv4.tree[rootName].vars[dataName].forEach(i=>{
-                let newNode = node.clone();
-                parent.append(newNode);
-                let rv4ForIns = rv4.q('*[rv4ForIn]',newNode[0]);
+
+            function loopThroughForinNodes(rv4ForNode,item) {
+                let rv4ForIns = rv4.q('*[rv4ForIn]',rv4ForNode);
                 rv4ForIns.forEach(forIn=>{
                     let forInVarName = forIn.attributes['rv4ForIn'].value;
-                    forIn.innerText = i[forInVarName];
+                    forIn.innerText = item[forInVarName];
                 })
+            }
+            
+            function loopThroughForClickNodes(rv4ForNode,idx) {
+                let rv4ForClicks = rv4.q('*[rv4ForClick]',rv4ForNode);
+                rv4ForClicks.forEach(rv4ForClick=>{
+                    let value = rv4ForClick.attributes['rv4ForClick'].value;
+                    value=value.replace("$index",idx);
+                    rv4ForClick.onclick = new Function('rv4.tree["'+rootName+'"].vars.'+value);
+                })
+            }
+
+            rv4.tree[rootName].vars[dataName].forEach((item,idx,arr)=>{
+                let newNode = node.clone();
+                parent.append(newNode);
+
+                // LOOP THROUGH FORIN NODES
+                loopThroughForinNodes(newNode[0],item);
+
+                // LOOP THROUGH FORCLICK NODES
+                loopThroughForClickNodes(newNode[0],idx)
             })
 
             rv4.q(root).on(dataName+'Change',function(event){
                 console.log(dataName+'Change');
                 parent.html('');
-                rv4.tree[rootName].vars[dataName].forEach(i=>{
+                rv4.tree[rootName].vars[dataName].forEach((item,idx,arr)=>{
                     let newNode = node.clone();
                     parent.append(newNode);
-                    let rv4ForIns = rv4.q('*[rv4ForIn]',newNode[0]);
-                    rv4ForIns.forEach(forIn=>{
-                        let forInVarName = forIn.attributes['rv4ForIn'].value;
-                        forIn.innerText = i[forInVarName];
-                    })
+                    // LOOP THROUGH FORIN NODES
+                    loopThroughForinNodes(newNode[0],item);
+                    // LOOP THROUGH FORCLICK NODES
+                    loopThroughForClickNodes(newNode[0],idx)
+
                 })
             })
         })
